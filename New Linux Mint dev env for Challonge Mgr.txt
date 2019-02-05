@@ -1,0 +1,54 @@
+sudo apt-get install build-essential ruby ruby-dev libssl-dev zlib1g-dev postgresql-all libsqlite3-dev libreadline-dev
+unzip new ruby
+cd <unzipped_new_ruby>/ext/{zlib, readline} and `ruby extconf.rb`
+cd <unzipped_new_ruby>
+./configure
+make
+sudo make install
+ruby -v # 2.6 or whatever is newest
+sudo gem install rails
+rails -v # 5.2.2 or whatever is newest
+sudo add-apt-repository ppa:git-core/ppa
+apt update
+sudo apt install git
+git --version # 2.20.1 or whatever is newest
+cd
+git clone https://github.com/acidhelm/challonge_mgr.git
+bundle install --path vendor/bundle
+bin/rails db:migrate
+bin/rails c # create your account
+bin/rails s # should work
+bin/rails t # should work
+
+# To get system tests working:
+
+sudo touch /etc/default/google-chrome # optional, to prevent Chrome from updating itself
+install Chrome
+download and copy chromedriver to ~/bin
+set -a PATH $HOME/bin
+bin/rails test:system # should work
+
+# Fish abbrs
+
+abbr -a -U -- brc 'bin/rails c'
+abbr -a -U -- brcs 'bin/rails c --sandbox'
+abbr -a -U -- brs 'bin/rails s'
+abbr -a -U -- brt 'bin/rails t'
+abbr -a -U -- brta 'bin/rails t; bin/rails test:system'
+abbr -a -U -- brts 'bin/rails test:system'
+abbr -a -U -- tka 'gitk --all &'
+
+# Fish prompt
+
+pick "Informative Vcs"
+set -U fish_prompt_pwd_dir_length 0
+
+# git
+
+git config --global user.email "email@example.com"
+git config --global user.name "Name Here"
+# Follow Github's instructions for creating keys
+gpg --list-secret-keys --keyid-format LONG
+# copy the text after "sec rsa4096/"
+git config --global user.signingkey <that text>
+git config commit.gpgsign true # do this in each repo
